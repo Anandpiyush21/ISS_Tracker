@@ -1,13 +1,13 @@
 :root {
-  --primary-color: #1c1c1c; /* Dark background */
-  --card-bg: #2d2d2d; /* Slightly lighter dark background for cards */
-  --card-bg-hover: #00bfff; /* Light blue color for card hover */
+  --primary-color: #1c1c1c; 
+  --card-bg: #2d2d2d; 
+  --card-bg-hover: #00bfff; 
   --card-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-  --card-hover-shadow: 0 4px 16px rgba(0, 191, 255, 0.9); /* Enhanced shadow effect */
-  --title-color: #e0e0e0; /* Light text color for title */
-  --title-hover-color: #eddd02; /* Light blue color for title on hover */
-  --text-color-hover: #000000; /* Black text color for cards on hover */
-  --map-hover-bg: rgba(0, 191, 255, 0.6); /* Enhanced light blue overlay on hover */
+  --card-hover-shadow: 0 4px 16px rgba(0, 191, 255, 0.9);
+  --title-color: #e0e0e0; 
+  --title-hover-color: #eddd02; 
+  --text-color-hover: #000000;
+  --map-hover-bg: rgba(0, 191, 255, 0.6); 
   --title-font: 'Roboto', sans-serif;
   --card-font: 'Arial', sans-serif;
 }
@@ -30,13 +30,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem; /* Added padding around the main section */
+  padding: 2rem; 
 }
 
 #header {
   text-align: center;
-  margin: 2rem 0; /* Added margin from top and bottom */
-  padding-bottom: 1.5rem; /* Increased bottom padding */
+  margin: 2rem 0; 
+  padding-bottom: 1.5rem; 
 }
 
 #header h1 {
@@ -46,27 +46,27 @@ body {
   font-family: var(--title-font);
   font-weight: 700;
   letter-spacing: 1px;
-  transition: color 0.3s ease, transform 0.3s ease; /* Added transition */
+  transition: color 0.3s ease, transform 0.3s ease; 
 }
 
 #header h1:hover {
-  color: var(--title-hover-color); /* Change to orange on hover */
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  color: var(--title-hover-color); 
+  transform: scale(1.05); 
 }
 
 #content {
   display: flex;
   width: 100%;
-  height: calc(100vh - 6rem); /* Adjusted height to account for header and additional padding */
-  gap: 1.5rem; /* Increased gap between map and info sections */
+  height: calc(100vh - 6rem); 
+  gap: 1.5rem; 
 }
 
 #map-section {
   width: 50%;
   height: 100%;
-  padding: 2rem; /* Increased padding */
-  position: relative; /* Required for absolute positioning of hover effect */
-  overflow: hidden; /* Ensure hover effect does not spill out */
+  padding: 2rem; 
+  position: relative; 
+  overflow: hidden; 
 }
 
 #map {
@@ -75,28 +75,28 @@ body {
   border-radius: 0.5rem;
   background: var(--primary-color);
   box-shadow: 9px 9px 18px rgba(0, 0, 0, 0.6);
-  transition: box-shadow 0.3s ease, background 0.3s ease; /* Smooth transition for shadow and background on hover */
+  transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
 #map:hover {
-  box-shadow: 0 0 20px rgba(255, 111, 0, 0.7); /* Enhanced orange glow effect on hover */
-  background: var(--map-hover-bg); /* Semi-transparent orange overlay */
+  box-shadow: 0 0 20px rgba(255, 111, 0, 0.7);
+  background: var(--map-hover-bg);
 }
 
 #info-section {
   width: 50%;
-  padding: 2rem; /* Increased padding */
+  padding: 2rem; 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, auto);
-  gap: 1.5rem; /* Increased gap between cards */
+  gap: 1.5rem;
   align-items: center;
   justify-items: center;
 }
 
 .card {
   background: var(--card-bg);
-  padding: 2rem; /* Increased padding */
+  padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: var(--card-shadow);
   transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
@@ -131,12 +131,12 @@ body {
 .card:hover {
   background: var(--card-bg-hover);
   color: var(--text-color-hover);
-  transform: scale(1.1); /* Enlarge card on hover */
+  transform: scale(1.1); 
   box-shadow: var(--card-hover-shadow);
 }
 
 .card:hover::before {
-  opacity: 1; /* Show overlay effect on hover */
+  opacity: 1; 
 }
 
 @media (max-width: 1050px) {
