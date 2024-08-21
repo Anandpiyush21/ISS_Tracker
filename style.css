@@ -154,3 +154,9 @@ body {
     grid-template-rows: repeat(6, auto);
   }
 }
+body {
+  background: url('https://www.nasa.gov/wp-content/uploads/2018/10/smbh-infinite-loop-rev.gif?w=800') no-repeat center center fixed; /* NASA image background */
+  background-size: cover;
+  color: var(--title-color);
+  font-family: 'Roboto', sans-serif;
+}
