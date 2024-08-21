@@ -1,13 +1,13 @@
 :root {
   --primary-color: #1c1c1c; /* Dark background */
   --card-bg: #2d2d2d; /* Slightly lighter dark background for cards */
-  --card-bg-hover: #ff6f00; /* Orange color for card hover */
+  --card-bg-hover: #00bfff; /* Light blue color for card hover */
   --card-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-  --card-hover-shadow: 0 4px 16px rgba(255, 111, 0, 0.9); /* Enhanced shadow effect */
+  --card-hover-shadow: 0 4px 16px rgba(0, 191, 255, 0.9); /* Enhanced shadow effect */
   --title-color: #e0e0e0; /* Light text color for title */
-  --title-hover-color: #ff6f00; /* Orange color for title on hover */
+  --title-hover-color: #eddd02; /* Light blue color for title on hover */
   --text-color-hover: #000000; /* Black text color for cards on hover */
-  --map-hover-bg: rgba(255, 111, 0, 0.6); /* Enhanced orange overlay on hover */
+  --map-hover-bg: rgba(0, 191, 255, 0.6); /* Enhanced light blue overlay on hover */
   --title-font: 'Roboto', sans-serif;
   --card-font: 'Arial', sans-serif;
 }
