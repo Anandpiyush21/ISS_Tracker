@@ -141,4 +141,4 @@ function getIconScale(zoom) {
     return Math.max(0.5, Math.min(zoom / 10, 2.0)); 
 }
 
-}
+
