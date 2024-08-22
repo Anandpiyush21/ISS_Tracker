@@ -9,8 +9,6 @@
   --map-hover-bg: rgba(0, 191, 255, 0.6); 
   --title-font: 'Roboto', sans-serif;
   --card-font: 'Arial', sans-serif;
-  --daylight-bg: url('sun.png'); /* Replace with actual sun image */
-  --eclipse-bg: url('sun.jpg'); /* Replace with actual eclipse image */
 }
 
 * {
@@ -137,14 +135,6 @@ body {
 
 .card:hover::before {
   opacity: 1; 
-}
-
-#daylight-card.daylight {
-  background: var(--daylight-bg) no-repeat center/contain;
-}
-
-#daylight-card.eclipsed {
-  background: var(--eclipse-bg) no-repeat center/contain;
 }
 
 @media (max-width: 1050px) {
