@@ -1,5 +1,4 @@
 :root {
-  --primary-color: #1c1c1c; 
   --card-bg: #2d2d2d; 
   --card-bg-hover: #00bfff; 
   --card-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
@@ -10,6 +9,8 @@
   --map-hover-bg: rgba(0, 191, 255, 0.6); 
   --title-font: 'Roboto', sans-serif;
   --card-font: 'Arial', sans-serif;
+  --daylight-bg: url('sun.png'); /* Replace with actual sun image */
+  --eclipse-bg: url('sun.jpg'); /* Replace with actual eclipse image */
 }
 
 * {
@@ -19,7 +20,6 @@
 }
 
 body {
-  background: var(--primary-color);
   color: var(--title-color);
   font-family: 'Roboto', sans-serif;
 }
@@ -139,6 +139,15 @@ body {
   opacity: 1; 
 }
 
+/* Daylight Card Specific Styles */
+#daylight-card.daylight {
+  background: var(--daylight-bg) no-repeat center/contain;
+}
+
+#daylight-card.eclipsed {
+  background: var(--eclipse-bg) no-repeat center/contain;
+}
+
 @media (max-width: 1050px) {
   #content {
     flex-direction: column;
@@ -154,8 +163,9 @@ body {
     grid-template-rows: repeat(6, auto);
   }
 }
+
 body {
-  background: url('https://www.nasa.gov/wp-content/uploads/2018/10/smbh-infinite-loop-rev.gif?w=800') no-repeat center center fixed; /* NASA image background */
+  background: url('https://www.nasa.gov/wp-content/uploads/2018/10/smbh-infinite-loop-rev.gif?w=800') no-repeat center center fixed; 
   background-size: cover;
   color: var(--title-color);
   font-family: 'Roboto', sans-serif;
