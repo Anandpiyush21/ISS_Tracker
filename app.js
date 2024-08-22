@@ -141,13 +141,4 @@ function getIconScale(zoom) {
     return Math.max(0.5, Math.min(zoom / 10, 2.0)); 
 }
 
-const daylightCard = document.getElementById('daylight-card');
-
-// Assume `isDaylight` is a boolean that determines the daylight status
-if (isDaylight) {
-  daylightCard.classList.add('daylight');
-  daylightCard.classList.remove('eclipsed');
-} else {
-  daylightCard.classList.add('eclipsed');
-  daylightCard.classList.remove('daylight');
 }
