@@ -139,7 +139,6 @@ body {
   opacity: 1; 
 }
 
-/* Daylight Card Specific Styles */
 #daylight-card.daylight {
   background: var(--daylight-bg) no-repeat center/contain;
 }
@@ -159,10 +158,11 @@ body {
   }
 
   #info-section {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, auto);
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    grid-template-rows: repeat(3, auto); /* Three rows */
   }
 }
+
 
 body {
   background: url('https://www.nasa.gov/wp-content/uploads/2018/10/smbh-infinite-loop-rev.gif?w=800') no-repeat center center fixed; 
