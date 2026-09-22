@@ -10,6 +10,10 @@
 </p>
 
 <p align="center">
+  <strong><a href="https://anandpiyush21.github.io/ISS_Tracker/">View the live tracker &rarr;</a></strong>
+</p>
+
+<p align="center">
   <a href="#running-it">Run it</a> ·
   <a href="#what-it-does">Features</a> ·
   <a href="#how-it-works">How it works</a> ·
@@ -67,9 +71,10 @@ Then open <http://localhost:8000>.
 > `fetch` and map tiles from `file://` pages. Any static server works — `npx serve`,
 > `php -S localhost:8000`, a VS Code Live Server extension.
 
-**Deploying** is just as simple, since the output is already static. On GitHub Pages,
-enable Pages for the repository and point it at the `main` branch root; the same
-files work unchanged on Netlify, Vercel or any static host.
+**Deploying** is just as simple, since the output is already static. This repository
+is published to GitHub Pages from the `main` branch root, at
+<https://anandpiyush21.github.io/ISS_Tracker/>; the same files work unchanged on
+Netlify, Vercel or any static host.
 
 ## How it works
 
