@@ -2,50 +2,137 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://openlayers.org/en/v4.6.5/css/ol.css"
-      type="text/css"
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta
+      name="description"
+      content="Live map of the International Space Station: position, altitude, speed, ground track and orbital footprint, updated in real time."
     />
-    <link rel="shortcut icon" href="favicon.png" />
-    <title>International Space Station Tracker</title>
+    <title>ISS Tracker &mdash; Live Position of the International Space Station</title>
+
+    <link rel="icon" href="favicon.png" />
+    <link rel="preconnect" href="https://api.wheretheiss.at" />
+    <link rel="preconnect" href="https://server.arcgisonline.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.2.1/ol.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
-    <section id="main-section">
-      <div id="header">
-        <h1>International Space Station Tracker</h1>
-      </div>
-      <div id="content">
-        <div id="map-section">
-          <div id="map">
-            <p id="map-loading">Loading...</p>
-          </div>
-        </div>
-        <div id="info-section">
-          <div class="card">
-            <h3 id="lat">Latitude: Loading...</h3>
-          </div>
-          <div class="card">
-            <h3 id="lon">Longitude: Loading...</h3>
-          </div>
-          <div class="card">
-            <h3 id="alt">Altitude: Loading...</h3>
-          </div>
-          <div class="card">
-            <h3 id="velocity">Velocity: Loading...</h3>
-          </div>
-          <div class="card">
-            <h3 id="visibility">Visibility: Loading...</h3>
-          </div>
-          <div class="card">
-            <h3 id="timestamp">Time: Loading...</h3>
-          </div>
+    <a class="skip-link" href="#stats">Skip to telemetry</a>
+
+    <header class="topbar">
+      <div class="brand">
+        <img src="iss.png" alt="" class="brand__icon" width="32" height="32" />
+        <div>
+          <h1>ISS Tracker</h1>
+          <p class="brand__sub">Live position of the International Space Station</p>
         </div>
       </div>
-    </section>
-    <script src="https://openlayers.org/en/v4.6.5/build/ol.js" type="text/javascript"></script>
-    <script type="text/javascript" src="app.js"></script>
+
+      <div class="status" role="status" aria-live="polite">
+        <span class="status__dot" data-state="loading"></span>
+        <span class="status__text" id="status-text">Connecting&hellip;</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="map-panel" aria-label="Map">
+        <div id="map" class="map"></div>
+
+        <div class="map-toolbar" role="group" aria-label="Map controls">
+          <button type="button" class="chip is-active" id="btn-follow" aria-pressed="true">
+            Follow ISS
+          </button>
+          <button type="button" class="chip is-active" id="btn-track" aria-pressed="true">
+            Ground track
+          </button>
+          <button type="button" class="chip is-active" id="btn-night" aria-pressed="true">
+            Day / night
+          </button>
+          <button type="button" class="chip" id="btn-basemap" aria-pressed="false">
+            Satellite
+          </button>
+        </div>
+
+        <p class="map-hint">Drag the map to look around &mdash; following pauses until you re-enable it.</p>
+      </section>
+
+      <section class="stats" id="stats" aria-label="Telemetry" aria-live="polite">
+        <article class="card">
+          <h2 class="card__label">Latitude</h2>
+          <p class="card__value" id="lat">&mdash;</p>
+          <p class="card__note" id="lat-dms">&nbsp;</p>
+        </article>
+
+        <article class="card">
+          <h2 class="card__label">Longitude</h2>
+          <p class="card__value" id="lon">&mdash;</p>
+          <p class="card__note" id="lon-dms">&nbsp;</p>
+        </article>
+
+        <article class="card">
+          <h2 class="card__label">Altitude</h2>
+          <p class="card__value" id="alt">&mdash;</p>
+          <p class="card__note">above mean sea level</p>
+        </article>
+
+        <article class="card">
+          <h2 class="card__label">Speed</h2>
+          <p class="card__value" id="vel">&mdash;</p>
+          <p class="card__note" id="vel-note">&nbsp;</p>
+        </article>
+
+        <article class="card">
+          <h2 class="card__label">Sunlight</h2>
+          <p class="card__value" id="vis">&mdash;</p>
+          <p class="card__note" id="vis-note">&nbsp;</p>
+        </article>
+
+        <article class="card">
+          <h2 class="card__label">Distance from you</h2>
+          <p class="card__value" id="dist">&mdash;</p>
+          <p class="card__note">
+            <span id="dist-note"></span>
+            <button type="button" class="linkbtn" id="btn-locate">Use my location</button>
+          </p>
+        </article>
+
+        <article class="card card--wide">
+          <h2 class="card__label">Observation time</h2>
+          <p class="card__value card__value--sm" id="time-local">&mdash;</p>
+          <p class="card__note" id="time-utc">&nbsp;</p>
+        </article>
+
+        <article class="card card--wide legend">
+          <h2 class="card__label">Map key</h2>
+          <ul class="legend__list">
+            <li><span class="swatch swatch--trail"></span>Ground track flown so far</li>
+            <li><span class="swatch swatch--orbit"></span>Predicted path, next orbit</li>
+            <li><span class="swatch swatch--footprint"></span>Footprint &mdash; where the ISS is above the horizon</li>
+            <li><span class="swatch swatch--night"></span>Night side of Earth</li>
+          </ul>
+        </article>
+
+        <div class="unit-toggle" role="group" aria-label="Units">
+          <button type="button" class="chip is-active" id="btn-metric" aria-pressed="true">Metric</button>
+          <button type="button" class="chip" id="btn-imperial" aria-pressed="false">Imperial</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Telemetry from
+        <a href="https://wheretheiss.at/w/developer" target="_blank" rel="noopener">Where the ISS at?</a>
+        &middot; basemaps by
+        <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>
+        &middot;
+        <a href="https://github.com/Anandpiyush21/ISS_Tracker" target="_blank" rel="noopener">source</a>
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/ol@10.2.1/dist/ol.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

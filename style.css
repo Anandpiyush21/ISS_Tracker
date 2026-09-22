@@ -1,14 +1,28 @@
+/* =============================================================
+   ISS Tracker — theme tokens
+   ============================================================= */
 :root {
-  --card-bg: #2d2d2d; 
-  --card-bg-hover: #00bfff; 
-  --card-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-  --card-hover-shadow: 0 4px 16px rgba(0, 191, 255, 0.9);
-  --title-color: #e0e0e0; 
-  --title-hover-color: #eddd02; 
-  --text-color-hover: #000000;
-  --map-hover-bg: rgba(0, 191, 255, 0.6); 
-  --title-font: 'Roboto', sans-serif;
-  --card-font: 'Arial', sans-serif;
+  --bg: #05070f;
+  --bg-elevated: #0d1322;
+  --surface: rgba(20, 28, 46, 0.72);
+  --surface-strong: #131b2d;
+  --border: rgba(126, 160, 220, 0.16);
+  --border-strong: rgba(126, 160, 220, 0.34);
+
+  --text: #e8eefc;
+  --text-muted: #8ea0c4;
+  --accent: #5ad1ff;
+  --accent-dim: rgba(90, 209, 255, 0.14);
+  --warn: #ffb347;
+  --bad: #ff6b6b;
+  --good: #57d9a3;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+  --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
 }
 
 * {
@@ -17,146 +31,390 @@
   box-sizing: border-box;
 }
 
+html,
 body {
-  color: var(--title-color);
-  font-family: 'Roboto', sans-serif;
+  height: 100%;
 }
 
-#main-section {
-  height: 100vh;
-  width: 100vw;
+body {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 2rem; 
+  font-family: var(--font);
+  color: var(--text);
+  background-color: var(--bg);
+  /* Starfield: three layers of radial "stars" over a deep-space gradient. */
+  background-image:
+    radial-gradient(1.4px 1.4px at 18% 22%, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1.2px 1.2px at 72% 14%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.6px 1.6px at 41% 68%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1.1px 1.1px at 88% 55%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1.3px 1.3px at 9% 81%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(900px 620px at 78% -10%, rgba(64, 120, 255, 0.18), transparent),
+    radial-gradient(760px 520px at 8% 108%, rgba(120, 60, 200, 0.16), transparent);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
 }
 
-#header {
-  text-align: center;
-  margin: 2rem 0; 
-  padding-bottom: 1.5rem; 
+a {
+  color: var(--accent);
+  text-decoration-color: rgba(90, 209, 255, 0.4);
+  text-underline-offset: 2px;
 }
 
-#header h1 {
-  font-size: 3rem;
-  color: var(--title-color);
-  margin: 0;
-  font-family: var(--title-font);
-  font-weight: 700;
-  letter-spacing: 1px;
-  transition: color 0.3s ease, transform 0.3s ease; 
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: #04121b;
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: 0;
 }
 
-#header h1:hover {
-  color: var(--title-hover-color); 
-  transform: scale(1.05); 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-#content {
+/* =============================================================
+   Top bar
+   ============================================================= */
+.topbar {
   display: flex;
-  width: 100%;
-  height: calc(100vh - 6rem); 
-  gap: 1.5rem; 
-}
-
-#map-section {
-  width: 50%;
-  height: 100%;
-  padding: 2rem; 
-  position: relative; 
-  overflow: hidden; 
-}
-
-#map {
-  width: 100%;
-  height: 100%;
-  border-radius: 0.5rem;
-  background: var(--primary-color);
-  box-shadow: 9px 9px 18px rgba(0, 0, 0, 0.6);
-  transition: box-shadow 0.3s ease, background 0.3s ease;
-}
-
-#map:hover {
-  box-shadow: 0 0 20px rgba(255, 111, 0, 0.7);
-  background: var(--map-hover-bg);
-}
-
-#info-section {
-  width: 50%;
-  padding: 2rem; 
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, auto);
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
   align-items: center;
-  justify-items: center;
+  justify-content: space-between;
+  padding: 1.1rem clamp(1rem, 3vw, 2.25rem);
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(10, 16, 30, 0.9), rgba(10, 16, 30, 0.45));
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand__icon {
+  filter: drop-shadow(0 0 10px rgba(90, 209, 255, 0.45));
+}
+
+.brand h1 {
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.brand__sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.status__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex: none;
+}
+.status__dot[data-state="live"] {
+  background: var(--good);
+  box-shadow: 0 0 0 0 rgba(87, 217, 163, 0.6);
+  animation: pulse 2s infinite;
+}
+.status__dot[data-state="stale"] {
+  background: var(--warn);
+}
+.status__dot[data-state="error"] {
+  background: var(--bad);
+}
+
+@keyframes pulse {
+  70% {
+    box-shadow: 0 0 0 8px rgba(87, 217, 163, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(87, 217, 163, 0);
+  }
+}
+
+/* =============================================================
+   Layout
+   ============================================================= */
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.95fr);
+  gap: clamp(1rem, 2vw, 1.6rem);
+  padding: clamp(1rem, 2vw, 1.6rem) clamp(1rem, 3vw, 2.25rem);
+  align-items: stretch;
+}
+
+/* ---- Map ---- */
+.map-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 420px;
+}
+
+.map {
+  flex: 1;
+  min-height: 360px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #0a0f1c;
+  box-shadow: var(--shadow);
+}
+
+.map-toolbar {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+.map-toolbar .chip {
+  pointer-events: auto;
+}
+
+.map-hint {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* OpenLayers overrides so the default controls match the theme. */
+.ol-zoom {
+  top: auto;
+  bottom: 2.4rem;
+  left: 0.75rem;
+}
+.ol-control button {
+  background: rgba(19, 27, 45, 0.9) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm) !important;
+}
+.ol-control button:hover {
+  background: var(--accent-dim) !important;
+}
+.ol-attribution {
+  background: rgba(5, 7, 15, 0.7) !important;
+  border-radius: var(--radius-sm) 0 0 0 !important;
+  font-size: 0.7rem;
+}
+.ol-attribution a {
+  color: var(--accent);
+}
+
+/* ---- Chips ---- */
+.chip {
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 550;
+  color: var(--text-muted);
+  background: rgba(13, 19, 34, 0.86);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.38rem 0.85rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+.chip:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.chip.is-active {
+  color: var(--accent);
+  border-color: rgba(90, 209, 255, 0.5);
+  background: var(--accent-dim);
+}
+
+.linkbtn {
+  font: inherit;
+  font-size: inherit;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- Telemetry cards ---- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  align-content: start;
 }
 
 .card {
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: var(--card-shadow);
-  transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0.95rem 1.05rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.card--wide {
+  grid-column: 1 / -1;
+}
+
+.card__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.card__value {
+  margin-top: 0.3rem;
+  font-family: var(--mono);
+  font-size: clamp(1.1rem, 2.1vw, 1.42rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.card__value--sm {
+  font-size: clamp(0.95rem, 1.7vw, 1.1rem);
+}
+
+.card__note {
+  margin-top: 0.2rem;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  min-height: 1em;
+}
+
+/* ---- Map key ---- */
+.legend__list {
+  list-style: none;
+  margin-top: 0.55rem;
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.legend__list li {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-family: var(--card-font);
+  gap: 0.55rem;
+}
+
+.swatch {
+  width: 20px;
+  height: 0;
+  flex: none;
+  border-radius: 2px;
+}
+.swatch--trail {
+  border-top: 3px solid rgba(90, 209, 255, 0.85);
+}
+.swatch--orbit {
+  border-top: 3px dashed rgba(255, 179, 71, 0.9);
+}
+.swatch--footprint {
+  height: 12px;
+  border: 1px solid rgba(90, 209, 255, 0.55);
+  background: rgba(90, 209, 255, 0.12);
+  border-radius: 999px;
+}
+.swatch--night {
+  height: 12px;
+  border: 1px solid rgba(255, 206, 120, 0.55);
+  background: rgba(2, 4, 12, 0.85);
+  border-radius: 3px;
+}
+
+.unit-toggle {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+/* =============================================================
+   Footer
+   ============================================================= */
+.footer {
+  padding: 1rem clamp(1rem, 3vw, 2.25rem) 1.6rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.76rem;
+  color: var(--text-muted);
   text-align: center;
-  font-size: 1.2rem;
-  color: var(--title-color);
-  position: relative;
 }
 
-.card h3 {
-  margin: 0;
+/* =============================================================
+   Responsive
+   ============================================================= */
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .map-panel {
+    min-height: 58vh;
+  }
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: inherit;
-  background: rgba(255, 111, 0, 0.2);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-}
-
-.card:hover {
-  background: var(--card-bg-hover);
-  color: var(--text-color-hover);
-  transform: scale(1.1); 
-  box-shadow: var(--card-hover-shadow);
-}
-
-.card:hover::before {
-  opacity: 1; 
-}
-
-@media (max-width: 1050px) {
-  #content {
+@media (max-width: 560px) {
+  .topbar {
     flex-direction: column;
+    align-items: flex-start;
   }
-
-  #map-section, #info-section {
-    width: 100%;
-    height: 50%;
+  .stats {
+    grid-template-columns: minmax(0, 1fr);
   }
-
-  #info-section {
-    grid-template-columns: 1fr 1fr; /* Two columns */
-    grid-template-rows: repeat(3, auto); /* Three rows */
+  .map-toolbar {
+    justify-content: flex-start;
+  }
+  .map-panel {
+    min-height: 52vh;
   }
 }
 
-
-body {
-  background: url('https://www.nasa.gov/wp-content/uploads/2018/10/smbh-infinite-loop-rev.gif?w=800') no-repeat center center fixed; 
-  background-size: cover;
-  color: var(--title-color);
-  font-family: 'Roboto', sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
